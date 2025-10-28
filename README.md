@@ -90,4 +90,4 @@ Tokens are securely stored and linked to the authenticated user. Use the same mo
 
 ## Support
 
-For issues or suggestions: [GitHub Issues](https://github.com/zaimea/laravel-socialite-extender/issues)
+For issues or suggestions: [GitHub Issues](https://github.com/zaimea/socialite-extender/issues)
