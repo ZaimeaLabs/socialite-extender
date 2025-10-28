@@ -1,0 +1,64 @@
+{
+    "name": "zaimea/socialite-extender",
+    "license": "MIT",
+    "homepage": "https://zaimea.com",
+    "description": "Extends Laravel Socialite with persistent token storage and advanced API integrations for Providers. Allows linking existing users to external accounts, performing post-login API actions.",
+    "keywords": [
+        "laravel",
+        "socialite",
+        "oauth",
+        "providers",
+        "integration",
+        "api",
+        "extender",
+        "zaimealabs",
+        "zaimea"
+    ],
+    "authors": [
+        {
+            "name": "Custură Laurențiu",
+            "email": "mail@custura.de"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0",
+        "laravel/socialite": "^6.7"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "phpunit/phpunit": "^11.0",
+        "mockery/mockery": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zaimea\\SocialiteExtender\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zaimea\\SocialiteExtender\\Tests\\": "tests/",
+            "Zaimea\\SocialiteExtender\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zaimea\\SocialiteExtender\\SocialiteExtenderServiceProvider"
+            ],
+            "aliases": {
+                "SocialiteExtender": "Zaimea\\SocialiteExtender\\Facades\\SocialiteExtender"
+            }
+        },
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}
