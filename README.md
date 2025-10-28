@@ -28,6 +28,17 @@ php artisan migrate
 @include('vendor.socialite-extender.profile.github-connect')
 ```
 
+### 4. User model should use the Zaimea\SocialiteExtender\Traits\HasSocialAccounts trait
+
+``` php
+use Zaimea\SocialiteExtender\Traits\HasSocialAccounts;
+
+class User extends Authenticatable
+{
+    use HasSocialAccounts, HasApiTokens, HasFactory, Notifiable;
+}
+```
+
 ------------------------------------------------------------------------
 
 ## Socialite Configuration
