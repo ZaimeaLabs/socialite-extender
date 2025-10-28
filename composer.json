@@ -23,7 +23,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/support": "^12.0",
-        "laravel/socialite": "^6.7"
+        "laravel/socialite": "^5.0"
     },
     "require-dev": {
         "orchestra/testbench": "^10.0",

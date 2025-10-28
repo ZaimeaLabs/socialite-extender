@@ -52,4 +52,26 @@ trait HasSocialAccounts
     {
         return optional($this->socialAccount($provider))->avatar;
     }
+
+    /**
+     * Get the Nickname from the connected provider, if available.
+     *
+     * @param string $provider
+     * @return string|null
+     */
+    public function socialNickname(string $provider): ?string
+    {
+        return optional($this->socialAccount($provider))->nickname;
+    }
+
+    /**
+     * Get the token from the connected provider, if available.
+     *
+     * @param string $provider
+     * @return string|null
+     */
+    public function socialToken(string $provider): ?string
+    {
+        return optional($this->socialAccount($provider))->token;
+    }
 }

@@ -19,16 +19,16 @@
             <form method="POST" action="{{ route('socialite-extender.disconnect', ['provider' => 'github']) }}" class="mt-2">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deconectează GitHub
+                <button type="submit" class="ml-4 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                    Disconnect GitHub
                 </button>
             </form>
         </div>
     </div>
 @else
     <form action="{{ route('socialite-extender.connect', ['provider' => 'github']) }}" method="get">
-        <button type="submit" class="btn btn-primary">
-            Conectează GitHub
+        <button type="submit" class="ml-4 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Connect GitHub
         </button>
     </form>
 @endif

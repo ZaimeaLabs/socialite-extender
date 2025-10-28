@@ -12,15 +12,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('provider');
-            $table->string('provider_user_id');
-            $table->string('token');
-            $table->string('refresh_token')->nullable();
+            $table->string('provider_user_id', 191);
+            $table->text('token');
+            $table->text('refresh_token')->nullable();
             $table->integer('expires_in')->nullable();
             $table->string('nickname')->nullable();
             $table->string('avatar')->nullable();
             $table->timestamps();
 
             $table->unique(['provider', 'provider_user_id']);
+            $table->index('user_id');
         });
     }
 
