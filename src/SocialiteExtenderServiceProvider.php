@@ -17,10 +17,6 @@ class SocialiteExtenderServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->publishes([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
-        ], 'migrations');
-
-        $this->publishes([
             __DIR__ . '/../config/socialite-extender.php' => config_path('socialite-extender.php'),
         ], 'config');
     }

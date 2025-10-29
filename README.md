@@ -8,10 +8,9 @@ Extends Socialite to connect a GitHub account (or any other Socialite provider) 
 composer require zaimea/socialite-extender
 ```
 
-### 1. Publish files (migrations, views, config)
+### 1. Publish files (views, config)
 
 ``` bash
-php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=migrations
 php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=views
 php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=config
 ```
@@ -26,6 +25,10 @@ php artisan migrate
 
 ``` blade
 @include('vendor.socialite-extender.profile.github-connect')
+```
+
+``` blade
+@include('socialite-extender::profile.github-connect')
 ```
 
 ### 4. User model should use the Zaimea\SocialiteExtender\Traits\HasSocialAccounts trait
@@ -49,7 +52,7 @@ Add this in `config/services.php`:
 'github' => [
     'client_id' => env('GITHUB_CLIENT_ID'),
     'client_secret' => env('GITHUB_CLIENT_SECRET'),
-    'redirect' => env('APP_URL') . '/socialite/callback/github',
+    'redirect' => env('APP_URL') . '/socialite-extender/callback/github',
 ],
 ```
 
