@@ -52,7 +52,9 @@ Add this in `config/services.php`:
 'github' => [
     'client_id' => env('GITHUB_CLIENT_ID'),
     'client_secret' => env('GITHUB_CLIENT_SECRET'),
-    'redirect' => env('APP_URL') . '/socialite-extender/callback/github',
+    'redirect' => env('GITHUB_REDIRECT') ?? env('APP_URL') . '/socialite-extender/callback/github',
+    'token_url' => env('GITHUB_TOKEN_URL', 'https://github.com/login/oauth/access_token'),
+    'scopes' => ['read:user'],
 ],
 ```
 
@@ -80,6 +82,21 @@ Add this in `config/services.php`:
 
 -   Displays connected GitHub account data (avatar, name, link, ID).
 -   Provides buttons to disconnect or connect a new account.
+
+### Zaimea\SocialiteExtender\Services\SocialApiClient
+
+```php 
+use Zaimea\SocialiteExtender\Models\SocialAccount;
+use Zaimea\SocialiteExtender\Services\SocialApiClient;
+
+$account = SocialAccount::find($id);
+$response = SocialApiClient::request($account, 'get', 'https://api.github.com/user');
+
+if ($response->ok()) {
+    $data = $response->json();
+}
+
+```
 
 ------------------------------------------------------------------------
 
