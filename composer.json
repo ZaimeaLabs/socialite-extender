@@ -38,7 +38,10 @@
     "autoload-dev": {
         "psr-4": {
             "Zaimea\\SocialiteExtender\\Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "tests/Models"
+        ]
     },
     "extra": {
         "laravel": {

@@ -24,10 +24,14 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * Load package migrations if present.
+     * Load package migrations and laravel migrations if present.
      */
     protected function defineDatabaseMigrations()
     {
+        // Load core Laravel migrations (users, password_resets etc.)
+        $this->loadLaravelMigrations();
+
+        // Load package migrations (social_accounts)
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }

@@ -8,6 +8,8 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Mockery;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ConnectTest extends TestCase
 {
@@ -17,10 +19,15 @@ class ConnectTest extends TestCase
     {
         parent::setUp();
 
-        // create users table + user if your tests depend on app models
-        // if using package only, ensure your app's User model is available in tests
-        $this->artisan('migrate', ['--database' => 'testbench'])->run();
-        User::factory()->create(['id' => 1, 'email' => 'test@example.com']);
+        // Migrations are loaded via TestCase::defineDatabaseMigrations()
+        // Create a user in the database (no artisan migrate here)
+        User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            // plain password for test; hashed
+            'password' => Hash::make('password'),
+        ]);
+
         $this->actingAs(User::first());
     }
 
