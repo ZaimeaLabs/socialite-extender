@@ -3,6 +3,7 @@
 namespace Zaimea\SocialiteExtender\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider;
@@ -12,6 +13,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
+            \Laravel\Socialite\SocialiteServiceProvider::class,
             SocialiteExtenderServiceProvider::class,
         ];
     }
@@ -30,6 +32,8 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Facade::clearResolvedInstance('Socialite');
 
         // Programmatically create the minimal tables we need for tests.
         // This avoids invoking artisan migrations and makes the tests stable in CI.
