@@ -17,7 +17,7 @@
         </h3>
 
         @if($githubAccount)
-            <div class="flex items-center space-x-4 mt-4">
+            <div class="flex items-center space-x-4 mt-4 text-gray-600 dark:text-gray-400">
                 <img src="{{ $githubAccount->avatar }}" alt="GitHub Avatar" class="w-12 h-12 rounded-full">
                 <div>
                     <div><strong>{{ __('Name') }}:</strong> {{ $githubAccount->nickname ?? '---' }}</div>
