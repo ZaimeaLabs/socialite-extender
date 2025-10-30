@@ -8,7 +8,6 @@
     failOnRisky="true"
     failOnWarning="true"
 >
-
     <testsuites>
         <testsuite name="Package Test Suite">
             <directory suffix="Test.php">tests</directory>
@@ -16,7 +15,6 @@
     </testsuites>
 
     <php>
-        <!-- Laravel config for Testbench -->
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
@@ -25,4 +23,14 @@
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="MAIL_MAILER" value="array"/>
     </php>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+
+        <report>
+            <clover outputFile="coverage.xml"/>
+        </report>
+    </coverage>
 </phpunit>

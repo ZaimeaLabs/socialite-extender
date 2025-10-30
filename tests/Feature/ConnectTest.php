@@ -4,11 +4,10 @@ namespace Zaimea\SocialiteExtender\Tests\Feature;
 
 use Zaimea\SocialiteExtender\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Zaimea\SocialiteExtender\Models\SocialAccount;
-use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Mockery;
+use App\Models\User;
 
 class ConnectTest extends TestCase
 {
@@ -17,14 +16,17 @@ class ConnectTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        // Create a user to be authenticated
+
+        // create users table + user if your tests depend on app models
+        // if using package only, ensure your app's User model is available in tests
+        $this->artisan('migrate', ['--database' => 'testbench'])->run();
         User::factory()->create(['id' => 1, 'email' => 'test@example.com']);
         $this->actingAs(User::first());
     }
 
     public function test_callback_saves_social_account()
     {
-        // Mock Socialite driver and returned user
+        // Mock Socialite provider user
         $socialiteUser = new SocialiteUser();
         $socialiteUser->id = '12345';
         $socialiteUser->nickname = 'octocat';
@@ -40,9 +42,8 @@ class ConnectTest extends TestCase
 
         Socialite::shouldReceive('driver')->with('github')->andReturn($driverMock);
 
-        // Call controller route
         $this->get(route('socialite-extender.callback', ['provider' => 'github']))
-            ->assertRedirect(); // redirect back to profile
+             ->assertRedirect();
 
         $this->assertDatabaseHas('social_accounts', [
             'provider' => 'github',

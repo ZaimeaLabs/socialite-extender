@@ -37,8 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Zaimea\\SocialiteExtender\\Tests\\": "tests/",
-            "Zaimea\\SocialiteExtender\\Database\\Factories\\": "database/factories/"
+            "Zaimea\\SocialiteExtender\\Tests\\": "tests/"
         }
     },
     "extra": {

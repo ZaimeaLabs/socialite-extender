@@ -14,11 +14,20 @@ abstract class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp($app)
     {
-        // you can configure DB sqlite in-memory for tests
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite.database', ':memory:');
+        // Use sqlite in-memory for tests
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+    }
 
-        // run migrations from package (or load your test migrations)
+    /**
+     * Load package migrations if present.
+     */
+    protected function defineDatabaseMigrations()
+    {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }

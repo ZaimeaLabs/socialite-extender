@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches: [ main, master ]
-    tags:    # test also on tags (useful for releases)
+    tags:
       - 'v*'
   pull_request:
     branches: [ main, master ]
@@ -14,10 +14,9 @@ permissions:
 
 jobs:
   tests:
-    name: Tests (PHP ${{ matrix.php }})
+    name: Run tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         php: [8.2]
 
@@ -34,9 +33,8 @@ jobs:
           extensions: mbstring, xml, curl, sqlite, zip, bcmath
           ini-values: |
             memory_limit = -1
-          coverage: xdebug # enable xdebug for possible coverage job (disabled by default in test command)
 
-      - name: Get composer cache directory
+      - name: Get composer cache dir
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
@@ -45,81 +43,75 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: composer-${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            composer-${{ runner.os }}-php${{ matrix.php }}-
+          restore-keys: composer-${{ runner.os }}-php${{ matrix.php }}-
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y git unzip
+      - name: Install system deps
+        run: sudo apt-get update -y && sudo apt-get install -y git unzip
 
-      - name: Install Composer dependencies
+      - name: Install PHP dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      - name: Create .env (sqlite)
+      - name: Create sqlite file (if needed)
         run: |
-          cp .env.example .env || true
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
-          # Use sqlite in-memory for tests or file-based sqlite for artisan migrate
-          php -r " \$contents = file_get_contents('.env'); \$contents = preg_replace('/^DB_CONNECTION=.*/m','DB_CONNECTION=sqlite', \$contents); \$contents = preg_replace('/^DB_DATABASE=.*/m','DB_DATABASE=database\/database.sqlite', \$contents); file_put_contents('.env', \$contents);"
-          mkdir -p database
-          touch database/database.sqlite
+          mkdir -p database || true
+          touch database/database.sqlite || true
 
-      - name: Generate APP_KEY
-        run: php artisan key:generate --ansi
-
-      - name: Cache config (optional)
+      - name: Create .env only if example exists
         run: |
-          php artisan config:clear
-          # php artisan config:cache   # uncomment to cache config in CI if desired
-
-      - name: Run migrations (if your tests expect DB)
-        run: |
-          php artisan migrate --force || true
-
-      - name: Run tests (composer test)
-        run: |
-          if composer test --no-interaction; then
-            echo "composer test passed"
+          if [ -f .env.example ]; then
+            cp .env.example .env || true
+            echo ".env created from .env.example"
           else
-            echo "composer test failed, trying phpunit directly"
-            vendor/bin/phpunit --colors=always --testdox || exit 1
+            echo "No .env.example found — package mode (skipping .env creation)"
           fi
+
+      - name: Run tests (PHPUnit / Pest)
         env:
-          # Ensure PHP uses sqlite and not trying to connect to other DBs
           DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
+          DB_DATABASE: ':memory:'
+        run: |
+          if [ -f vendor/bin/pest ] && grep -q "pestphp/pest" composer.json; then
+            vendor/bin/pest --stop-on-failure --colors=always
+          else
+            vendor/bin/phpunit --colors=always --testdox
+          fi
 
   coverage:
-    name: Coverage (optional)
+    name: Coverage (generate and upload coverage.xml)
     runs-on: ubuntu-latest
     needs: tests
-    if: always()
+    strategy:
+      matrix:
+        php: [8.2]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Setup PHP (with Xdebug)
+      - name: Setup PHP (with xdebug)
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ matrix.php }}
           extensions: xdebug
           coverage: xdebug
+          ini-values: |
+            memory_limit = -1
 
-      - name: Install deps
+      - name: Install Composer deps
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      - name: Create .env & sqlite
+      - name: Create sqlite file for coverage
         run: |
-          cp .env.example .env || true
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
-          php -r " \$contents = file_get_contents('.env'); \$contents = preg_replace('/^DB_CONNECTION=.*/m','DB_CONNECTION=sqlite', \$contents); \$contents = preg_replace('/^DB_DATABASE=.*/m','DB_DATABASE=database\/database.sqlite', \$contents); file_put_contents('.env', \$contents);"
-          mkdir -p database
-          touch database/database.sqlite
+          mkdir -p database || true
+          touch database/database.sqlite || true
 
-      - name: Run tests with coverage
+      - name: Run phpunit with coverage
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
         run: |
-          vendor/bin/phpunit --coverage-clover=coverage.xml || true
+          vendor/bin/phpunit --colors=always --testdox --coverage-clover=coverage.xml
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
