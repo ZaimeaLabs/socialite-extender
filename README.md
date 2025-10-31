@@ -1,113 +1,36 @@
-# Laravel Socialite Extender
+<p align="center"><img width="337" height="66" src="/.github/logo.svg" alt="Socialite Extender"></p>
 
-Extends Socialite to connect a GitHub account (or any other Socialite provider) to an existing user and store API tokens.
+<p align="center">
+<a href="https://github.com/zaimealabs/socialite-extender/actions"><img src="https://github.com/zaimealabs/socialite-extender/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/zaimea/socialite-extender"><img src="https://img.shields.io/packagist/dt/zaimea/socialite-extender" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/zaimea/socialite-extender"><img src="https://img.shields.io/packagist/v/zaimea/socialite-extender" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/zaimea/socialite-extender"><img src="https://img.shields.io/packagist/l/zaimea/socialite-extender" alt="License"></a>
+</p>
 
-## Installation
+## Introduction
 
-``` bash
-composer require zaimea/socialite-extender
-```
+Socialite Extender, extends Laravel Socialite to connect a GitHub account (or any other Socialite provider) to an existing user and store API tokens.
 
-### 1. Publish files (views, config)
+## Official Documentation
 
-``` bash
-php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=views
-php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=config
-```
+Documentation for Socialite-Extender can be found on the [Zaimea website](https://zaimea.com/docs/socialite-extender).
 
-### 2. Run migration
+## Contributing
 
-``` bash
-php artisan migrate
-```
+Thank you for considering contributing to Socialite-Extender! The contribution guide can be found in the [Zaimea documentation](https://zaimea.com/docs/open-source/contributions).
 
-### 3. Include the Blade partial in the user's profile
+## Code of Conduct
 
-``` blade
-@include('vendor.socialite-extender.profile.github-connect')
-```
+To ensure that the Zaimea open-source ecosystem remains welcoming and respectful, please review and follow our [Code of Conduct](https://zaimea.com/docs/open-source/contributions#code-of-conduct).
 
-``` blade
-@include('socialite-extender::profile.github-connect')
-```
+## Security Vulnerabilities
 
-### 4. User model should use the Zaimea\SocialiteExtender\Traits\HasSocialAccounts trait
-
-``` php
-use Zaimea\SocialiteExtender\Traits\HasSocialAccounts;
-
-class User extends Authenticatable
-{
-    use HasSocialAccounts, HasApiTokens, HasFactory, Notifiable;
-}
-```
-
-------------------------------------------------------------------------
-
-## Socialite Configuration
-
-Add this in `config/services.php`:
-
-``` php
-'github' => [
-    'client_id' => env('GITHUB_CLIENT_ID'),
-    'client_secret' => env('GITHUB_CLIENT_SECRET'),
-    'redirect' => env('GITHUB_REDIRECT') ?? env('APP_URL') . '/socialite-extender/callback/github',
-    'token_url' => env('GITHUB_TOKEN_URL', 'https://github.com/login/oauth/access_token'),
-    'scopes' => ['read:user'],
-],
-```
-
-## Usage
-
--   The logged-in user can connect a GitHub account from their profile.
--   They will see their avatar, name, and a link to their GitHub profile.
--   They can disconnect their GitHub account, which deletes stored tokens.
-
-------------------------------------------------------------------------
-
-## Main Features
-
-### The `SocialAccount` Model
-
--   Stores token, refresh_token, nickname, avatar, and provider_user_id for each connected provider.
-
-### Controller
-
--   `redirect($provider)` - redirects to the OAuth provider for authentication.
--   `callback($provider)` - saves or updates tokens for the logged-in user.
--   `disconnect($provider)` - removes the provider connection.
-
-### Blade Partial
-
--   Displays connected GitHub account data (avatar, name, link, ID).
--   Provides buttons to disconnect or connect a new account.
-
-### Zaimea\SocialiteExtender\Services\SocialApiClient
-
-```php 
-use Zaimea\SocialiteExtender\Models\SocialAccount;
-use Zaimea\SocialiteExtender\Services\SocialApiClient;
-
-$account = SocialAccount::find($id);
-$response = SocialApiClient::request($account, 'get', 'https://api.github.com/user');
-
-if ($response->ok()) {
-    $data = $response->json();
-}
-
-```
-
-------------------------------------------------------------------------
-
-## Extensibility
-
-You can connect any provider supported by Socialite (Google, Facebook, etc.) --- just change the `provider` in the route and config.
-
-## Security
-
-Tokens are securely stored and linked to the authenticated user. Use the same model pattern for any provider.
+Please review [our security policy](https://github.com/zaimealabs/socialite-extender/security/policy) on how to report security vulnerabilities.
 
 ## Support
 
-For issues or suggestions: [GitHub Issues](https://github.com/zaimea/socialite-extender/issues)
+For issues or suggestions: [GitHub Issues](https://github.com/zaimealabs/socialite-extender/issues)
+
+## License
+
+Socialite-Extender is open-sourced software licensed under the [MIT license](LICENSE.md).

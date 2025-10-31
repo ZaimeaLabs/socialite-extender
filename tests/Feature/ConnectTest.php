@@ -2,15 +2,18 @@
 
 namespace Zaimea\SocialiteExtender\Tests\Feature;
 
-use Zaimea\SocialiteExtender\Tests\TestCase;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Mockery;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Zaimea\SocialiteExtender\Tests\TestCase;
 
 class ConnectTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
