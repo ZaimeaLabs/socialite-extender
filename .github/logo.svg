@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400">
+  <!-- User icon with plus -->
+  <g transform="translate(80, 60)">
+    <!-- head -->
+    <circle cx="80" cy="80" r="60" fill="#1A202C"/>
+    <!-- body -->
+    <path d="M80 170c-70 0-120 35-120 60v30h240v-30c0-25-50-60-120-60z" fill="#1A202C"/>
+    <!-- plus -->
+    <g transform="translate(150, 10)">
+      <rect x="0" y="32" width="60" height="16" fill="#1A202C"/>
+      <rect x="22" y="10" width="16" height="60" fill="#1A202C"/>
+    </g>
+  </g>
+
+  <!-- Text identical style to Socialite -->
+  <text x="350" y="210"
+        font-family="Nunito Sans, sans-serif"
+        font-size="180"
+        font-weight="600"
+        fill="#1A202C">
+    Socialite
+  </text>
+  <text x="1100" y="210"
+        font-family="Nunito Sans, sans-serif"
+        font-size="180"
+        font-weight="600"
+        fill="#3f64adff">
+    Extender
+  </text>
+</svg>
