@@ -1,7 +1,7 @@
 <p align="center"><img width="337" height="66" src="/.github/logo.svg" alt="Socialite Extender"></p>
 
 <p align="center">
-    <a href="https://github.com/zaimealabs/socialite-extender/actions"><img src="https://github.com/zaimealabs/socialite-extender/actions/workflows/tests/badge.svg" alt="Build Status"></a>
+    <a href="https://github.com/zaimealabs/socialite-extender/actions"><img src="https://github.com/zaimealabs/socialite-extender/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
     <a href="https://packagist.org/packages/zaimea/socialite-extender"><img src="https://img.shields.io/packagist/dt/zaimea/socialite-extender" alt="Total Downloads"></a>
     <a href="https://packagist.org/packages/zaimea/socialite-extender"><img src="https://img.shields.io/packagist/v/zaimea/socialite-extender" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/zaimea/socialite-extender"><img src="https://img.shields.io/packagist/l/zaimea/socialite-extender" alt="License"></a>
