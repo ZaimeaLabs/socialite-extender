@@ -10,4 +10,4 @@ permissions:
 
 jobs:
   lint:
-    uses: zaimea/.github/workflows/coding-standards.yml@main
+    uses: zaimea/.github/.github/workflows/coding-standards.yml@main

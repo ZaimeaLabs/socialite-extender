@@ -10,4 +10,4 @@ jobs:
   update:
     permissions:
       contents: write
-    uses: zaimea/.github/workflows/update-changelog.yml@main
+    uses: zaimea/.github/.github/workflows/update-changelog.yml@main

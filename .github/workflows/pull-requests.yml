@@ -9,4 +9,4 @@ permissions:
 
 jobs:
   uneditable:
-    uses: zaimea/.github/workflows/pull-requests.yml@main
+    uses: zaimea/.github/.github/workflows/pull-requests.yml@main

@@ -9,4 +9,4 @@ permissions:
 
 jobs:
   help-wanted:
-    uses: zaimea/.github/workflows/issues.yml@main
+    uses: zaimea/.github/.github/workflows/issues.yml@main
