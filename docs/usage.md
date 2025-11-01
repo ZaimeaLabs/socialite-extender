@@ -1,48 +1,12 @@
-# Laravel Socialite Extender
+---
+title: How to use package
+description: How to use package
+github: https://github.com/zaimealabs/socialite-extender/docs/edit/main/
+---
 
-Extends Socialite to connect a GitHub account (or any other Socialite provider) to an existing user and store API tokens.
+# Socialite Extender Usage
 
-## Installation
-
-``` bash
-composer require zaimea/socialite-extender
-```
-
-### 1. Publish files (views, config)
-
-``` bash
-php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=views
-php artisan vendor:publish --provider="Zaimea\SocialiteExtender\SocialiteExtenderServiceProvider" --tag=config
-```
-
-### 2. Run migration
-
-``` bash
-php artisan migrate
-```
-
-### 3. Include the Blade partial in the user's profile
-
-``` blade
-@include('vendor.socialite-extender.profile.github-connect')
-```
-
-``` blade
-@include('socialite-extender::profile.github-connect')
-```
-
-### 4. User model should use the Zaimea\SocialiteExtender\Traits\HasSocialAccounts trait
-
-``` php
-use Zaimea\SocialiteExtender\Traits\HasSocialAccounts;
-
-class User extends Authenticatable
-{
-    use HasSocialAccounts, HasApiTokens, HasFactory, Notifiable;
-}
-```
-
-------------------------------------------------------------------------
+[[TOC]]
 
 ## Socialite Configuration
 
@@ -95,7 +59,6 @@ $response = SocialApiClient::request($account, 'get', 'https://api.github.com/us
 if ($response->ok()) {
     $data = $response->json();
 }
-
 ```
 
 ------------------------------------------------------------------------
