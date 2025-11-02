@@ -11,14 +11,6 @@ body:
       placeholder: 3.1.0
     validations:
       required: true
-  - type: dropdown
-    attributes:
-      label: Jetstream Stack
-      options:
-        - Inertia
-        - Livewire
-    validations:
-      required: true
   - type: input
     attributes:
       label: Laravel Version
