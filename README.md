@@ -38,4 +38,4 @@ For issues or suggestions: [GitHub Issues](https://github.com/zaimealabs/sociali
 
 ## License
 
-Socialite-Extender is open-sourced software licensed under the [MIT license](LICENSE.md).
+Socialite-Extender is open-sourced software licensed under the [MIT license](LICENSE).
