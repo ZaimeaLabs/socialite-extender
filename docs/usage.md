@@ -1,7 +1,7 @@
 ---
 title: How to use package
 description: How to use package
-github: https://github.com/zaimealabs/socialite-extender/docs/edit/main/docs
+github: https://github.com/zaimealabs/socialite-extender/edit/main/docs/
 onThisArticle: true
 sidebar: true
 rightbar: true
