@@ -1,7 +1,7 @@
 ---
 title: Notable changes
 description: Notable changes
-github: https://github.com/zaimealabs/socialite-extender/docs/edit/main/docs
+github: https://github.com/zaimealabs/socialite-extender/edit/main/docs/
 onThisArticle: false
 sidebar: true
 rightbar: false
